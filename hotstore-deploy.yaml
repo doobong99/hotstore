@@ -1,0 +1,27 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: hotstore
+  namespace: dex-dev
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: hotstore
+      labels:
+        app: hotstore
+    spec:
+      containers:
+      - image: dep-dev-registry.cloudzcp.io/hotspot/hotstore:latest
+        name: hotstore
+        env:
+          - name: NUMROWS
+            valueFrom:
+              configMapKeyRef:
+                name: hotstore-config
+                key: NUMROWS
+          - name: PAGENO
+            valueFrom:
+              configMapKeyRef:
+                name: hotstore-config
+                key: PAGENO

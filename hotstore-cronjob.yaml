@@ -1,0 +1,19 @@
+apiVersion: batch/v2alpha1
+kind: CronJob
+metadata:
+  name: hotstore
+spec:
+  schedule: "45 3 1,15 * *"
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            app: hotstore-cronjob
+        spec:
+          restartPolicy: Never
+          containers:
+          - name: hotstore
+            image: dep-dev-registry.cloudzcp.io/hotspot/hotstore:latest
